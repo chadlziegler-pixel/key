@@ -2,29 +2,29 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-# Bu bizim sanal veritabanımız (Normalde gerçek veritabanı kullanılır)
+# DATABASE (Tırnak işaretlerine dikkat: None kelimesinde tırnak OLMAMALI)
 database = {
     "KEY-123": {"hwid": None, "active": True},
-    "KEY-456": {"hwid": "None", "active": True},
-    "SANA-OZEL-001": {"hwid": None, "active": True}, # Yeni eklediğin key
-    "DENEME-99": {"hwid": None, "active": True},      # Bir tane daha
-}
+    "KEY-456": {"hwid": None, "active": True},
+    "SANA-OZEL-001": {"hwid": None, "active": True},
+    "DENEME-99": {"hwid": None, "active": True}
 }
 
 @app.get("/check")
 def check_key(key: str, hwid: str):
+    # Key listede var mı?
     if key not in database:
         return {"status": "error", "message": "Gecersiz Key"}
 
     data = database[key]
-    
-    # Key ilk kez kullanılıyorsa kaydet
+
+    # Key daha önce hiç kullanılmamışsa (Tam olarak None ise)
     if data["hwid"] is None:
-        data["hwid"] = hwid
+        data["hwid"] = hwid  # Cihazı kaydet
         return {"status": "success", "message": "Cihaz kaydedildi"}
-    
-    # Key zaten kayıtlıysa HWID kontrol et
-    if data["hwid"] == hwid:
+
+    # Kayıtlı cihazla girmeye çalışan cihaz aynı mı?
+    if str(data["hwid"]) == str(hwid):
         return {"status": "success", "message": "Giris basarili"}
     else:
         return {"status": "error", "message": "Bu key baska cihazda kayitli!"}
