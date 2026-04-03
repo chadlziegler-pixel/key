@@ -4,17 +4,20 @@ app = FastAPI()
 
 # DATABASE (Tırnak işaretlerine dikkat: None kelimesinde tırnak OLMAMALI)
 database = {
-    "KEY-123": {"hwid": None, "active": True},
-    "KEY-456": {"hwid": None, "active": True},
-    "SANA-OZEL-001": {"hwid": None, "active": True},
-    "DENEME-99": {"hwid": None, "active": True}
+    "162": {"hwid": None, "active": True},
+    "152": {"hwid": None, "active": True},
+    "142": {"hwid": None, "active": True},
+    "123": {"hwid": None, "active": True}
 }
 
 @app.get("/check")
 def check_key(key: str, hwid: str):
-    # Key listede var mı?
+    # Gelen keyi ve veritabanındaki keyleri kontrol ederken eşleştirme yapalım
     if key not in database:
-        return {"status": "error", "message": "Gecersiz Key"}
+        return {"status": "error", "message": f"Gecersiz Key: {key}"}
+
+    data = database[key]
+    # ... geri kalan kod aynı
 
     data = database[key]
 
