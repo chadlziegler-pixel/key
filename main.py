@@ -5,7 +5,7 @@ app = FastAPI()
 # Bu bizim sanal veritabanımız (Normalde gerçek veritabanı kullanılır)
 database = {
     "KEY-123": {"hwid": None, "active": True},
-    "KEY-456": {"hwid": "987654321", "active": True},
+    "KEY-456": {"hwid": "None", "active": True},
     "SANA-OZEL-001": {"hwid": None, "active": True}, # Yeni eklediğin key
     "DENEME-99": {"hwid": None, "active": True},      # Bir tane daha
 }
